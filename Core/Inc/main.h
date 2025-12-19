@@ -57,6 +57,10 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define D14_Pin GPIO_PIN_0
+#define D14_GPIO_Port GPIOF
+#define GDO0_Pin GPIO_PIN_1
+#define GDO0_GPIO_Port GPIOF
 #define D0_Pin GPIO_PIN_0
 #define D0_GPIO_Port GPIOA
 #define D1_Pin GPIO_PIN_1
@@ -67,12 +71,8 @@ void Error_Handler(void);
 #define D3_GPIO_Port GPIOA
 #define D4_Pin GPIO_PIN_4
 #define D4_GPIO_Port GPIOA
-#define D5_Pin GPIO_PIN_5
-#define D5_GPIO_Port GPIOA
-#define D6_Pin GPIO_PIN_6
-#define D6_GPIO_Port GPIOA
-#define D7_Pin GPIO_PIN_7
-#define D7_GPIO_Port GPIOA
+#define NCS_Pin GPIO_PIN_0
+#define NCS_GPIO_Port GPIOB
 #define D8_Pin GPIO_PIN_8
 #define D8_GPIO_Port GPIOA
 #define D9_Pin GPIO_PIN_9
@@ -83,14 +83,18 @@ void Error_Handler(void);
 #define D11_GPIO_Port GPIOA
 #define D12_Pin GPIO_PIN_12
 #define D12_GPIO_Port GPIOA
-#define D13_Pin GPIO_PIN_13
-#define D13_GPIO_Port GPIOA
-#define D14_Pin GPIO_PIN_14
-#define D14_GPIO_Port GPIOA
 #define D15_Pin GPIO_PIN_15
 #define D15_GPIO_Port GPIOA
-#define NCS_Pin GPIO_PIN_6
-#define NCS_GPIO_Port GPIOB
+#define D5_Pin GPIO_PIN_4
+#define D5_GPIO_Port GPIOB
+#define D6_Pin GPIO_PIN_5
+#define D6_GPIO_Port GPIOB
+#define D7_Pin GPIO_PIN_6
+#define D7_GPIO_Port GPIOB
+#define D13_Pin GPIO_PIN_7
+#define D13_GPIO_Port GPIOB
+#define nESTOP_Pin GPIO_PIN_8
+#define nESTOP_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 
