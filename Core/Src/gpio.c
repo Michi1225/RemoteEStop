@@ -52,11 +52,17 @@ void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, NCS_Pin|nESTOP_Pin, GPIO_PIN_SET);
 
-  /*Configure GPIO pins : D14_Pin GDO0_Pin */
-  GPIO_InitStruct.Pin = D14_Pin|GDO0_Pin;
+  /*Configure GPIO pin : D14_Pin */
+  GPIO_InitStruct.Pin = D14_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
+  HAL_GPIO_Init(D14_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : GDO0_Pin */
+  GPIO_InitStruct.Pin = GDO0_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GDO0_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : D0_Pin D1_Pin D2_Pin D3_Pin
                            D4_Pin D8_Pin D9_Pin D10_Pin
