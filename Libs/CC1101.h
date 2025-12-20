@@ -513,18 +513,22 @@ enum cc1101_registers_t
 #define CC1101_VAL_TEST0 0x00	   //TEST0
 
 
-#define CC1101_REG_PARTNUM 0xF0   //PARTNUM
-#define CC1101_REG_VERSION 0xF1   //VERSION
-#define CC1101_REG_FREQEST 0xF2   //FREQEST
-#define CC1101_REG_LQI 0xF3	   //LQI
-#define CC1101_REG_RSSI 0xF4	   //RSSI
-#define CC1101_REG_MARCSTATE 0xF5 //MARCSTAT
-#define CC1101_REG_WORTIM1 0xF6   //WORTIM1
-#define CC1101_REG_WORTIM0 0xF7   //WORTIM0
-#define CC1101_REG_PKTSTATUS 0xF8 //PKTSTATU
-#define CC1101_REG_VCO_VC_DAC 0xF9//VCO_VC_D
-#define CC1101_REG_TXBYTES 0xFA   //TXBYTES
-#define CC1101_REG_RXBYTES 0xFB   //RXBYTES
+enum class cc1101_statusreg_t : uint8_t
+{
+	CC1101_STATUS_REG_PARTNUM		= 0xF0,
+	CC1101_STATUS_REG_VERSION		= 0xF1,
+	CC1101_STATUS_REG_FREQEST		= 0xF2,
+	CC1101_STATUS_REG_LQI			= 0xF3,
+	CC1101_STATUS_REG_RSSI			= 0xF4,
+	CC1101_STATUS_REG_MARCSTATE		= 0xF5,
+	CC1101_STATUS_REG_WORTIM1		= 0xF6,
+	CC1101_STATUS_REG_WORTIM0		= 0xF7,
+	CC1101_STATUS_REG_PKTSTATUS		= 0xF8,
+	CC1101_STATUS_REG_VCO_VC_DAC	= 0xF9,
+	CC1101_STATUS_REG_TXBYTES		= 0xFA,
+	CC1101_STATUS_REG_RXBYTES		= 0xFB
+};
+
 #define CC1101_REG_PATABLE 0x3E   //PATABLE
 #define CC1101_VAL_PATABLE 0xFF   //PATABLE
 
@@ -574,7 +578,7 @@ enum CC1101_State
 	CC1101_State_TXFIFO_UNDERFLOW
 };
 
-enum CC1101_Strobe
+enum class cc1101_strobe_t : uint8_t
 {
 	CC1101_Strobe_SRES = 0x30,
 	CC1101_Strobe_SFSTXON,
@@ -642,13 +646,15 @@ public:
 	CC1101();
 	CC1101_State read_fsm_state();
 
-    CC1101_State state_transition(CC1101_Strobe strobe);
+    CC1101_State state_transition(cc1101_strobe_t strobe);
 
 	uint8_t init();
 
 	uint8_t read_rx_fifo(uint8_t *pRxData);
 
 	uint8_t write_tx_fifo(uint8_t *pTxData);
+
+	uint8_t read_status_reg(cc1101_statusreg_t reg);
 
 
 
