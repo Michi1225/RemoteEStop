@@ -281,7 +281,7 @@ CC1101::CC1101()
  */
 CC1101_State CC1101::read_fsm_state()
 {
-	std::array<uint8_t,2> txData = {CC1101_REG_MARCSTATE, CC1101_Strobe_SNOP};
+	std::array<uint8_t,2> txData = {static_cast<uint8_t>(cc1101_statusreg_t::CC1101_STATUS_REG_MARCSTATE), static_cast<uint8_t>(cc1101_strobe_t::CC1101_Strobe_SNOP)};
 	std::array<uint8_t,2> rxData = {0, 0}; 
 
 	HAL_GPIO_WritePin(NCS_GPIO_Port, NCS_Pin, GPIO_PIN_RESET);
@@ -302,14 +302,14 @@ CC1101_State CC1101::read_fsm_state()
  * 		 E.g. when transitioning from RX to TX, the FSM has a transition state
  * 		 TXRX_SETTLING.
  */
-CC1101_State CC1101::state_transition(CC1101_Strobe strobe)
+CC1101_State CC1101::state_transition(cc1101_strobe_t strobe)
 {
-	std::array<uint8_t,2> txData = {strobe, CC1101_Strobe_SNOP};
+	std::array<uint8_t,2> txData = {static_cast<uint8_t>(strobe), static_cast<uint8_t>(cc1101_strobe_t::CC1101_Strobe_SNOP)};
 	std::array<uint8_t,2> rxData = {0, 0};
 
 	HAL_GPIO_WritePin(NCS_GPIO_Port, NCS_Pin, GPIO_PIN_RESET);
 	HAL_SPI_TransmitReceive(CC1101_SPI_HANDLE, txData.data(), rxData.data(), 2, 10);
-	txData.at(0) = CC1101_REG_MARCSTATE;
+	txData.at(0) = static_cast<uint8_t>(cc1101_statusreg_t::CC1101_STATUS_REG_MARCSTATE);
 	HAL_SPI_TransmitReceive(CC1101_SPI_HANDLE, txData.data(), rxData.data(), 2, 10);
 	HAL_GPIO_WritePin(NCS_GPIO_Port, NCS_Pin, GPIO_PIN_SET);
 
@@ -332,14 +332,14 @@ uint8_t CC1101::init()
 	HAL_GPIO_WritePin(NCS_GPIO_Port, NCS_Pin, GPIO_PIN_RESET);
 
 	//wake up device
-	txData[0] = CC1101_Strobe_SNOP;
-	txData[1] = CC1101_Strobe_SNOP;
+	txData[0] = static_cast<uint8_t>(cc1101_strobe_t::CC1101_Strobe_SNOP);
+	txData[1] = static_cast<uint8_t>(cc1101_strobe_t::CC1101_Strobe_SNOP);
 	errorcode = HAL_SPI_TransmitReceive(CC1101_SPI_HANDLE, txData, rxData, 2, 10);
 	if(errorcode != 0) return errorcode;
 
 	//reset device
-	txData[0] = CC1101_Strobe_SRES;
-	txData[1] = CC1101_Strobe_SNOP;
+	txData[0] = static_cast<uint8_t>(cc1101_strobe_t::CC1101_Strobe_SRES);
+	txData[1] = static_cast<uint8_t>(cc1101_strobe_t::CC1101_Strobe_SNOP);
 	errorcode = HAL_SPI_TransmitReceive(CC1101_SPI_HANDLE, txData, rxData, 2, 10);
 	if(errorcode != 0) return errorcode;
 
@@ -573,7 +573,7 @@ uint8_t CC1101::read_rx_fifo(uint8_t *pRxData)
 {
 	//Fixed Packet length
 	std::array<uint8_t, CC1101_PKT_LEN + 2 * CC1101_APPEND_STATUS + 1> txData;
-	txData.fill(CC1101_Strobe_SNOP);
+	txData.fill(static_cast<uint8_t>(cc1101_strobe_t::CC1101_Strobe_SNOP));
 	txData.at(0) = CC1101_BURST_RX;
 	
 	std::array<uint8_t, CC1101_PKT_LEN + 2 * CC1101_APPEND_STATUS + 1> rxData;
@@ -652,3 +652,17 @@ uint8_t CC1101::write_tx_fifo(uint8_t *pTxData)
 
 #endif
 }
+
+uint8_t CC1101::read_status_reg(cc1101_statusreg_t reg)
+{
+	uint8_t txData[2] = {0};
+	uint8_t rxData[2] = {0};
+	txData[0] = static_cast<uint8_t>(reg);
+	txData[1] = static_cast<uint8_t>(cc1101_strobe_t::CC1101_Strobe_SNOP);
+	HAL_GPIO_WritePin(NCS_GPIO_Port, NCS_Pin, GPIO_PIN_RESET);
+	HAL_SPI_TransmitReceive(CC1101_SPI_HANDLE, txData, rxData, 2, 10);
+	HAL_GPIO_WritePin(NCS_GPIO_Port, NCS_Pin, GPIO_PIN_SET);
+
+	return rxData[1];
+}
+
