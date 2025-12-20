@@ -35,7 +35,7 @@ CC1101::CC1101()
 
 	this->fifothr = 
 	{
-		.FIFO_THR = 0x00,		//61 in TX, 4 in RX
+		.FIFO_THR = 0x0F,		//1 in TX, 64 in RX
 		.CLOSE_IN_RX = 0x00,	//No RX Attenuation
 		.ADC_RETENTION = 0		//Only used in Test (I think)
 	};
@@ -73,7 +73,7 @@ CC1101::CC1101()
 
 	this->addr = 
 	{
-		.ADDR = 0x01 			//Device address
+		.ADDR = 0x02 			//Device address
 	};
 
 	this->channr = 
