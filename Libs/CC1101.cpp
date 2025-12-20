@@ -66,7 +66,7 @@ CC1101::CC1101()
 	this->pktctrl0 = 
 	{
 		.LENGTH_CONFIG = 0x00,	//Use PKTLEN register for packet length
-		.CRC_EN = 1,			//Enable CRC
+		.CRC_EN = 0,			//Enable CRC
 		.PKT_FORMAT = 0x00,		//Normal mode
 		.WHITE_DATA = 0			//Data whitening disabled
 	};
@@ -83,7 +83,7 @@ CC1101::CC1101()
 
 	this->fsctrl1 = 
 	{
-		.FREQ_IF = 0x0F 		//Frequency offset for IF, Default value
+		.FREQ_IF = 0x08 		//Frequency offset for IF, Default value
 	};
 
 	this->fsctrl0 = 
@@ -93,43 +93,43 @@ CC1101::CC1101()
 
 	this->freq2 = 
 	{
-		.FREQ = 0x1E 			//Frequency setting, Default value
+		.FREQ = 0x21 			//Frequency setting, Default value
 	};
 
 	this->freq1 = 
 	{
-		.FREQ = 0xC4 			//Frequency setting, Default value
+		.FREQ = 0x65 			//Frequency setting, Default value
 	};
 
 	this->freq0 = 
 	{
-		.FREQ = 0xEC 			//Frequency setting, Default value
+		.FREQ = 0x6A 			//Frequency setting, Default value
 	};
 
 	this->mdmcfg4 = 
 	{
-		.DRATE_E = 0x0C,		//Data rate exponent, Default value
-		.CHANBW_M = 0x00,		//Channel bandwidth mantissa, Default value
-		.CHANBW_E = 0x02		//Channel bandwidth exponent, Default value
+		.DRATE_E = 0x0B,		//Data rate exponent, Default value
+		.CHANBW_M = 0x01,		//Channel bandwidth mantissa, Default value
+		.CHANBW_E = 0x01		//Channel bandwidth exponent, Default value
 	};
 
 	this->mdmcfg3 = 
 	{
-		.DRATE_M = 0x22			//Data rate mantissa, Default value, results in 115200 Baud/s
+		.DRATE_M = 0xF8			//Data rate mantissa, Default value, results in 115200 Baud/s
 	};
 
 	this->mdmcfg2 = 
 	{
-		.SYNC_MODE = 0x02,		//16/16 sync word bits detected
+		.SYNC_MODE = 0x03,		//16/16 sync word bits detected
 		.MANCHESTER_EN = 0,		//Manchester disabled
-		.MOD_FORMAT = 0x00,		//2-FSK
+		.MOD_FORMAT = 0x01,		//2-FSK
 		.DEM_DCFILT_OFF = 0		//DC filter enabled
 	};
 
 	this->mdmcfg1 = 
 	{
 		.CHANSPC_E = 0x02,		//Default channel spacing exponent
-		.NUM_PREAMBLE = 0x02,	//4 bytes preamble
+		.NUM_PREAMBLE = 0x07,	//4 bytes preamble
 		.FEC_EN = 0				//FEC disabled
 	};
 
@@ -162,16 +162,16 @@ CC1101::CC1101()
 	{
 		.XOSC_FORCE_ON = 0,		//Disable XOSC force on
 		.PIN_CTRL_EN = 0,		//Disable pin control
-		.PO_TIMEOUT = 0x01,		//2.3 - 2.4 us
-		.FS_AUTOCAL = 0x00		//No automatic calibration
+		.PO_TIMEOUT = 0x02,		//2.3 - 2.4 us
+		.FS_AUTOCAL = 0x01		//No automatic calibration
 	};
 
 	this->foccfg = 
 	{
-		.FOC_LIMIT = 0x02,		//Default value
+		.FOC_LIMIT = 0x01,		//Default value
 		.FOC_POST_K = 0x01,		//Default value
-		.FOC_PRE_K = 0x02,		//Default value
-		.FOC_BS_CS_GATE = 0x01	//Default value
+		.FOC_PRE_K = 0x03,		//Default value
+		.FOC_BS_CS_GATE = 0x00	//Default value
 	};
 
 	this->bscfg = 
@@ -179,29 +179,29 @@ CC1101::CC1101()
 		.BS_LIMIT = 0x00,		//Default value
 		.BS_POST_KP = 0x01,		//Default value
 		.BC_POST_KI = 0x01,		//Default value
-		.BS_PRE_KP = 0x02,		//Default value
-		.BS_PRE_KI = 0x01		//Default value
+		.BS_PRE_KP = 0x01,		//Default value
+		.BS_PRE_KI = 0x00		//Default value
 	};
 
 	this->agcctrl2 = 
 	{
-		.MAGN_TARGET = 0x03,	//Default value
+		.MAGN_TARGET = 0x07,	//Default value
 		.MAX_LNA_GAIN = 0x00,	//Maximum LNA gain
-		.MAX_DVGA_GAIN = 0x00	//All gain stages enabled
+		.MAX_DVGA_GAIN = 0x03	//All gain stages enabled
 	};
 
 	this->agcctrl1 = 
 	{
 		.CARRIER_SENSE_ABS_THR = 0x00, //Default value
 		.CARRIER_SENSE_REL_THR = 0x00, //Default value
-		.AGC_LNA_PRIORITY = 1			//Default value
+		.AGC_LNA_PRIORITY = 0			//Default value
 	};
 
 	this->agcctrl0 = 
 	{
-		.FILTER_LENGTH = 0x01,	//Default value
+		.FILTER_LENGTH = 0x02,	//Default value
 		.AGC_FREEZE = 0,		//AGC not frozen
-		.WAIT_TIME = 0x01,		//Default value
+		.WAIT_TIME = 0x03,		//Default value
 		.HYST_LEVEL = 0x02		//Default value
 	};
 
@@ -227,37 +227,37 @@ CC1101::CC1101()
 	{
 		.MIX_CURRENT = 0x02,			//Default value
 		.LODIV_BUF_CURRENT_RX = 0x01,	//Default value
-		.LNA2MIX_CURRENT = 0x01,		//Default value
-		.LNA_CURRENT = 0x01			//Default value
+		.LNA2MIX_CURRENT = 0x03,		//Default value
+		.LNA_CURRENT = 0x02			//Default value
 	};
 
 	this->frend0 = 
 	{
-		.PA_POWER = 0x07,				//Max output power
+		.PA_POWER = 0x00,				//Max output power
 		.LODIV_BUF_CURRENT_TX = 0x01	//Default value
 	};
 
 	this->fscal3 = 
 	{
-		.FSCAL3_3_0 = 0x09,				//Default value
+		.FSCAL3_3_0 = 0x0A,				//Default value
 		.CHP_CURR_CAL_EN = 0x02,		//Default value
-		.FSCAL3_7_6 = 0x02 			//Default value
+		.FSCAL3_7_6 = 0x03 			//Default value
 	};
 
 	this->fscal2 = 
 	{
 		.FSCAL2 = 0x0A, 				//Default value
-		.VCO_CORE_H_EN = 0				//Disable high VCO current
+		.VCO_CORE_H_EN = 1				//Disable high VCO current
 	};
 
 	this->fscal1 = 
 	{
-		.FSCAL1 = 0x20 					//Default value
+		.FSCAL1 = 0x00 					//Default value
 	};
 
 	this->fscal0 = 
 	{
-		.FSCAL0 = 0x0D 					//Default value
+		.FSCAL0 = 0x1F 					//Default value
 	};
 
 	this->rcctrl1 = 
