@@ -328,10 +328,9 @@ typedef union
 	struct
 	{
 		uint8_t FILTER_LENGTH	:2;
-		uint8_t AGC_FREEZE		:1;
+		uint8_t AGC_FREEZE		:2;
 		uint8_t WAIT_TIME		:2;
 		uint8_t HYST_LEVEL		:2;
-		uint8_t 				:1;
 	};
 	uint8_t raw;
 }cc1101_agcctrl0_t;
