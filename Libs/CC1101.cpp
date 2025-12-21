@@ -66,9 +66,9 @@ CC1101::CC1101()
 	this->pktctrl0 = 
 	{
 		.LENGTH_CONFIG = 0x00,	//Use PKTLEN register for packet length
-		.CRC_EN = 0,			//Enable CRC
+		.CRC_EN = 1,			//Enable CRC
 		.PKT_FORMAT = 0x00,		//Normal mode
-		.WHITE_DATA = 0			//Data whitening disabled
+		.WHITE_DATA = 1			//Data whitening disabled
 	};
 
 	this->addr = 

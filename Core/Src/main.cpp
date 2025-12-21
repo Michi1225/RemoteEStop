@@ -25,6 +25,7 @@
 /* USER CODE BEGIN Includes */
 #include "swo.h"
 #include "CC1101.h"
+#include "codec.h"
 
 /* USER CODE END Includes */
 
@@ -100,14 +101,17 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  uint8_t txData[3] = {0x01,'h','h'};
+  uint32_t count = 0;
+  uint8_t txData[5] = {0x01,0,0,0,0};
   while (1)
   {
-    error = cc1101.write_tx_fifo(txData);
-    uint8_t status = cc1101.read_status_reg(cc1101_statusreg_t::CC1101_STATUS_REG_MARCSTATE);
-    ITM->PORT[0].u8 = status;
-     status = cc1101.read_status_reg(cc1101_statusreg_t::CC1101_STATUS_REG_TXBYTES);
-    ITM->PORT[1].u8 = status;
+    uint32_t cypher = codec::encode32(count);
+    memcpy(txData + 1, &cypher, 4);
+    cc1101.write_tx_fifo(txData);
+    ITM->PORT[0].u32 = cypher;
+    ITM->PORT[1].u32 = count;
+
+    ++count;
     HAL_Delay(100);
     /* USER CODE END WHILE */
 

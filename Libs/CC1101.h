@@ -6,7 +6,7 @@
 #include "stm32g4xx_hal.h"
 #include "main.h"
 
-#define CC1101_PKT_LEN 3
+#define CC1101_PKT_LEN 5
 
 typedef union 
 {
