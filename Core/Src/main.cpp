@@ -115,7 +115,7 @@ int main(void)
     ITM->PORT[1].u32 = count;
 
     ++count;
-    HAL_Delay(100);
+    HAL_Delay(4);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
