@@ -109,26 +109,35 @@ int main(void)
   {
     while(HAL_GPIO_ReadPin(GDO0_GPIO_Port, GDO0_Pin) == GPIO_PIN_RESET)
     {
-      int8_t rssi = 0;
-      uint8_t stat_rssi = cc1101.read_status_reg(cc1101_statusreg_t::CC1101_STATUS_REG_RSSI);
-      if(stat_rssi >= 128)
-      {
-          rssi = (stat_rssi - 256) / 2 - 74;
-      }
-      else
-      {
-          rssi = stat_rssi / 2 - 74;
-      }
-      ITM->PORT[0].u8 = rssi; //RSSI
-      HAL_Delay(0);
+      // int8_t rssi = 0;
+      // uint8_t stat_rssi = cc1101.read_status_reg(cc1101_statusreg_t::CC1101_STATUS_REG_RSSI);
+      // if(stat_rssi >= 128)
+      // {
+      //     rssi = (stat_rssi - 256) / 2 - 74;
+      // }
+      // else
+      // {
+      //     rssi = stat_rssi / 2 - 74;
+      // }
+      // ITM->PORT[0].u8 = rssi; //RSSI
+      // HAL_Delay(0);
+      __NOP();
     }
     cc1101.read_rx_fifo(rxData); 
     uint32_t cypher = 0;
     memcpy(&cypher, rxData + 1, 4);
     ITM->PORT[1].u32 = codec::decode32(cypher); //device address
+    int8_t rssi = 0;
+    if(rxData[5] >= 128)
+    {
+        rssi = (rxData[5] - 256) / 2 - 74;
+    }
+    else
+    {
+        rssi = rxData[5] / 2 - 74;
+    }
+    ITM->PORT[0].u8 = rssi; //RSSI
 
-
-    HAL_Delay(10);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
