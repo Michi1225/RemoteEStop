@@ -6,7 +6,7 @@
 #include "stm32g4xx_hal.h"
 #include "main.h"
 
-#define CC1101_PKT_LEN 3
+#define CC1101_PKT_LEN 5
 
 typedef union 
 {
@@ -544,7 +544,7 @@ enum class cc1101_statusreg_t : uint8_t
 
 #define CC1101_VARIABLE_PKTLEN_EN 	(CC1101_VAL_PKTCTRL0 & 0x03)
 #define CC1101_ADR_CHK 				((CC1101_VAL_PKTCTRL1 & 0x03) > 0)
-#define CC1101_APPEND_STATUS		1
+#define CC1101_APPEND_STATUS		0
 
 #define CC1101_SPI_HANDLE &hspi1
 

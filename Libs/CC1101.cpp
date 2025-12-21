@@ -35,7 +35,7 @@ CC1101::CC1101()
 
 	this->fifothr = 
 	{
-		.FIFO_THR = 0x00,		//1 in TX, 64 in RX
+		.FIFO_THR = 0x04,		//1 in TX, 64 in RX
 		.CLOSE_IN_RX = 0x00,	//No RX Attenuation
 		.ADC_RETENTION = 0		//Only used in Test (I think)
 	};
@@ -66,9 +66,9 @@ CC1101::CC1101()
 	this->pktctrl0 = 
 	{
 		.LENGTH_CONFIG = 0x00,	//Use PKTLEN register for packet length
-		.CRC_EN = 0,			//Enable CRC
+		.CRC_EN = 1,			//Enable CRC
 		.PKT_FORMAT = 0x00,		//Normal mode
-		.WHITE_DATA = 0			//Data whitening disabled//TODO:enable crc and whitening?
+		.WHITE_DATA = 1			//Data whitening disabled//TODO:enable crc and whitening?
 	};
 
 	this->addr = 

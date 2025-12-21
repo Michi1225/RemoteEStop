@@ -25,6 +25,7 @@
 /* USER CODE BEGIN Includes */
 #include "swo.h"
 #include "CC1101.h"
+#include "codec.h"
 
 /* USER CODE END Includes */
 
@@ -93,7 +94,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   SWD_Init();
   CC1101 cc1101;
-  int error = cc1101.init();
+  cc1101.init();
   CC1101_State state = cc1101.state_transition(cc1101_strobe_t::CC1101_Strobe_SRX);
 
   ITM->PORT[0].u8 = 0;
@@ -103,28 +104,30 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  uint8_t rxData[5] = {0,0,0,0,0};
-  HAL_Delay(1000);
+  uint8_t rxData[7] = {0,0,0,0,0, 0,0};
   while (1)
   {
-    while(HAL_GPIO_ReadPin(GDO0_GPIO_Port, GDO0_Pin) == GPIO_PIN_RESET){} //wait for GDO0 to go high (packet received)
-    cc1101.read_rx_fifo(rxData);
-    
-    // ITM->PORT[0].u8 = rxData[0]; //send first byte to SWO for debugging
-    // ITM->PORT[1].u8 = rxData[1]; //send second byte to SWO for debugging
-    uint8_t status = rxData[4] & 0x7F; //status byte
-    ITM->PORT[0].u8 = status; //send status to SWO for debugging
-    status = rxData[3]; //RSSI byte
-    int8_t rssi = 0;
-    if(status >= 128)
+    while(HAL_GPIO_ReadPin(GDO0_GPIO_Port, GDO0_Pin) == GPIO_PIN_RESET)
     {
-        rssi = (int8_t)((int16_t)status - 256) / 2 - 74;
+      int8_t rssi = 0;
+      uint8_t stat_rssi = cc1101.read_status_reg(cc1101_statusreg_t::CC1101_STATUS_REG_RSSI);
+      if(stat_rssi >= 128)
+      {
+          rssi = (stat_rssi - 256) / 2 - 74;
+      }
+      else
+      {
+          rssi = stat_rssi / 2 - 74;
+      }
+      ITM->PORT[0].u8 = rssi; //RSSI
+      HAL_Delay(0);
     }
-    else
-    {
-        rssi = (int8_t)status / 2 - 74;
-    }
-    ITM->PORT[1].u8 = rssi; //send RSSI to SWO for debugging
+    cc1101.read_rx_fifo(rxData); 
+    uint32_t cypher = 0;
+    memcpy(&cypher, rxData + 1, 4);
+    ITM->PORT[1].u32 = codec::decode32(cypher); //device address
+
+
     HAL_Delay(10);
     /* USER CODE END WHILE */
 
