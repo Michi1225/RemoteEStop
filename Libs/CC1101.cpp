@@ -60,7 +60,7 @@ CC1101::CC1101()
 		.ADR_CHK = 0x01,								//Address check, no broadcast
 		.APPEND_STATUS = CC1101_APPEND_STATUS,			//Append 2 status bytes to the payload
 		.CRC_AUTOFLUSH = 0,								//Disable auto flush on CRC error
-		.PQT = 0x05									//Preamble quality threshold //TODO:Change to 0?
+		.PQT = 0x05									//Preamble quality threshold
 	};
 
 	this->pktctrl0 = 
@@ -68,7 +68,7 @@ CC1101::CC1101()
 		.LENGTH_CONFIG = 0x00,	//Use PKTLEN register for packet length
 		.CRC_EN = 1,			//Enable CRC
 		.PKT_FORMAT = 0x00,		//Normal mode
-		.WHITE_DATA = 1			//Data whitening disabled//TODO:enable crc and whitening?
+		.WHITE_DATA = 1			//Data whitening disabled
 	};
 
 	this->addr = 
@@ -83,7 +83,7 @@ CC1101::CC1101()
 
 	this->fsctrl1 = 
 	{
-		.FREQ_IF = 0x08 		//Frequency offset for IF, Default value//TODO:DIFF
+		.FREQ_IF = 0x08 		//Frequency offset for IF, Default value
 	};
 
 	this->fsctrl0 = 
@@ -93,44 +93,44 @@ CC1101::CC1101()
 
 	this->freq2 = 
 	{
-		.FREQ = 0x21 			//Frequency setting, Default value//TODO:DIFF
+		.FREQ = 0x21 			//Frequency setting, Default value
 	};
 
 	this->freq1 = 
-	{//TODO:DIFF
+	{
 		.FREQ = 0x65 			//Frequency setting, Default value
 	};
 
 	this->freq0 = 
 	{
-		.FREQ = 0x6A 			//Frequency setting, Default value//TODO:DIFF
+		.FREQ = 0x6A 			//Frequency setting, Default value
 	};
 
 	this->mdmcfg4 = 
 	{
 		.DRATE_E = 0x0B,		//Data rate exponent, Default value
 		.CHANBW_M = 0x01,		//Channel bandwidth mantissa, Default value
-		.CHANBW_E = 0x01		//Channel bandwidth exponent, Default value//TODO:DIFF
+		.CHANBW_E = 0x01		//Channel bandwidth exponent, Default value
 	};
 
 	this->mdmcfg3 = 
 	{
-		.DRATE_M = 0xF8			//Data rate mantissa, Default value, results in 115200 Baud/s//TODO:DIFF
+		.DRATE_M = 0xF8			//Data rate mantissa, Default value, results in 115200 Baud/s
 	};
 
 	this->mdmcfg2 = 
 	{
 		.SYNC_MODE = 0x03,		//16/16 sync word bits detected
 		.MANCHESTER_EN = 0,		//Manchester disabled
-		.MOD_FORMAT = 0x01,		//2-FSK // TODO: change to 0x07
-		.DEM_DCFILT_OFF = 0		//DC filter enabled//TODO:DIFF
+		.MOD_FORMAT = 0x01,		//2-FSK
+		.DEM_DCFILT_OFF = 0		//DC filter enabled
 	};
 
 	this->mdmcfg1 = 
 	{
 		.CHANSPC_E = 0x02,		//Default channel spacing exponent
 		.NUM_PREAMBLE = 0x02,	//4 bytes preamble
-		.FEC_EN = 0				//FEC disabled//TODO: enable FEC? 
+		.FEC_EN = 0				//FEC disabled
 	};
 
 	this->mdmcfg0 = 
@@ -141,7 +141,7 @@ CC1101::CC1101()
 	this->deviatn = 
 	{
 		.DEVIATION_M = 0x07,	//Frequency deviation mantissa, Default value
-		.DEVIATION_E = 0x04		//Frequency deviation exponent, Default value//TODO:DIFF
+		.DEVIATION_E = 0x04		//Frequency deviation exponent, Default value
 	};
 
 	this->mcsm2 = 
@@ -171,7 +171,7 @@ CC1101::CC1101()
 		.FOC_LIMIT = 0x01,		//Default value
 		.FOC_POST_K = 0x01,		//Default value
 		.FOC_PRE_K = 0x03,		//Default value
-		.FOC_BS_CS_GATE = 0x00	//Default value//TODO:DIFF
+		.FOC_BS_CS_GATE = 0x00	//Default value
 	};
 
 	this->bscfg = 
@@ -194,15 +194,15 @@ CC1101::CC1101()
 	{
 		.CARRIER_SENSE_ABS_THR = 0x00, //Default value
 		.CARRIER_SENSE_REL_THR = 0x00, //Default value
-		.AGC_LNA_PRIORITY = 0			//Default value//TODO: enable LNA priority?
+		.AGC_LNA_PRIORITY = 0			//Default value
 	};
 
 	this->agcctrl0 = 
 	{
 		.FILTER_LENGTH = 0x02,	//Default value
-		.AGC_FREEZE = 0,		//AGC not frozen //TODO: IMPORTANT change to 1?
+		.AGC_FREEZE = 0,		//AGC not frozen
 		.WAIT_TIME = 0x03,		//Default value
-		.HYST_LEVEL = 0x02		//Default value//TODO:DIFF
+		.HYST_LEVEL = 0x02		//Default value
 	};
 
 	this->worevt1 = 
@@ -241,13 +241,13 @@ CC1101::CC1101()
 	{
 		.FSCAL3_3_0 = 0x0A,				//Default value
 		.CHP_CURR_CAL_EN = 0x02,		//Default value
-		.FSCAL3_7_6 = 0x03 			//Default value//TODO:DIFF
+		.FSCAL3_7_6 = 0x03 			//Default value
 	};
 
 	this->fscal2 = 
 	{
 		.FSCAL2 = 0x0A, 				//Default value
-		.VCO_CORE_H_EN = 1				//Disable high VCO current//TODO:DIFF
+		.VCO_CORE_H_EN = 1				//Disable high VCO current
 	};
 
 	this->fscal1 = 
@@ -257,7 +257,7 @@ CC1101::CC1101()
 
 	this->fscal0 = 
 	{
-		.FSCAL0 = 0x1F 					//Default value//TODO:DIFF
+		.FSCAL0 = 0x1F 					//Default value
 	};
 
 	this->rcctrl1 = 
@@ -361,7 +361,7 @@ uint8_t CC1101::init()
 	errorcode = HAL_SPI_TransmitReceive(CC1101_SPI_HANDLE, txData, rxData, 2, 10);
 	if(errorcode != 0) return errorcode;
 
-	txData[0] = CC1101_REG_FIFOTHR; //TODO:DIFF
+	txData[0] = CC1101_REG_FIFOTHR;
 	txData[1] = this->fifothr.raw;
 	errorcode = HAL_SPI_TransmitReceive(CC1101_SPI_HANDLE, txData, rxData, 2, 10);
 	if(errorcode != 0) return errorcode;
@@ -382,12 +382,12 @@ uint8_t CC1101::init()
 	if (errorcode != 0) return errorcode;
 
 	txData[0] = CC1101_REG_PKTCTRL1;
-	txData[1] = this->pktctrl1.raw;//TODO:DIFF   0xA5 
+	txData[1] = this->pktctrl1.raw;
 	errorcode = HAL_SPI_TransmitReceive(CC1101_SPI_HANDLE, txData, rxData, 2, 10);
 	if (errorcode != 0) return errorcode;
 
 	txData[0] = CC1101_REG_PKTCTRL0;
-	txData[1] = this->pktctrl0.raw;//TODO:DIFF   0x00
+	txData[1] = this->pktctrl0.raw;
 	errorcode = HAL_SPI_TransmitReceive(CC1101_SPI_HANDLE, txData, rxData, 2, 10);
 	if (errorcode != 0) return errorcode;
 
@@ -402,7 +402,7 @@ uint8_t CC1101::init()
 	if (errorcode != 0) return errorcode;
 
 	txData[0] = CC1101_REG_FSCTRL1;
-	txData[1] = this->fsctrl1.raw;//TODO:DIFF
+	txData[1] = this->fsctrl1.raw;
 	errorcode = HAL_SPI_TransmitReceive(CC1101_SPI_HANDLE, txData, rxData, 2, 10);
 	if (errorcode != 0) return errorcode;
 
@@ -411,38 +411,38 @@ uint8_t CC1101::init()
 	errorcode = HAL_SPI_TransmitReceive(CC1101_SPI_HANDLE, txData, rxData, 2, 10);
 	if (errorcode != 0) return errorcode;
 
-	txData[0] = CC1101_REG_FREQ2;//TODO:DIFF
+	txData[0] = CC1101_REG_FREQ2;
 	txData[1] = this->freq2.raw;
 	errorcode = HAL_SPI_TransmitReceive(CC1101_SPI_HANDLE, txData, rxData, 2, 10);
 	if (errorcode != 0) return errorcode;
 
 	txData[0] = CC1101_REG_FREQ1;
-	txData[1] = this->freq1.raw;//TODO:DIFF
+	txData[1] = this->freq1.raw;
 	errorcode = HAL_SPI_TransmitReceive(CC1101_SPI_HANDLE, txData, rxData, 2, 10);
 	if (errorcode != 0) return errorcode;
 
 	txData[0] = CC1101_REG_FREQ0;
-	txData[1] = this->freq0.raw;//TODO:DIFF
+	txData[1] = this->freq0.raw;
 	errorcode = HAL_SPI_TransmitReceive(CC1101_SPI_HANDLE, txData, rxData, 2, 10);
 	if (errorcode != 0) return errorcode;
 
 	txData[0] = CC1101_REG_MDMCFG4;
-	txData[1] = this->mdmcfg4.raw;//TODO:DIFF  0x5B
+	txData[1] = this->mdmcfg4.raw;
 	errorcode = HAL_SPI_TransmitReceive(CC1101_SPI_HANDLE, txData, rxData, 2, 10);
 	if (errorcode != 0) return errorcode;
 
 	txData[0] = CC1101_REG_MDMCFG3;
-	txData[1] = this->mdmcfg3.raw;//TODO:DIFF   0xF8
+	txData[1] = this->mdmcfg3.raw;
 	errorcode = HAL_SPI_TransmitReceive(CC1101_SPI_HANDLE, txData, rxData, 2, 10);
 	if (errorcode != 0) return errorcode;
 
 	txData[0] = CC1101_REG_MDMCFG2;
-	txData[1] = this->mdmcfg2.raw;//TODO:DIFF 0x13 
+	txData[1] = this->mdmcfg2.raw;
 	errorcode = HAL_SPI_TransmitReceive(CC1101_SPI_HANDLE, txData, rxData, 2, 10);
 	if (errorcode != 0) return errorcode;
 
 	txData[0] = CC1101_REG_MDMCFG1;
-	txData[1] = this->mdmcfg1.raw;//TODO:DIFF 0x22
+	txData[1] = this->mdmcfg1.raw;
 	errorcode = HAL_SPI_TransmitReceive(CC1101_SPI_HANDLE, txData, rxData, 2, 10);
 	if (errorcode != 0) return errorcode;
 
@@ -452,7 +452,7 @@ uint8_t CC1101::init()
 	if (errorcode != 0) return errorcode;
 
 	txData[0] = CC1101_REG_DEVIATN;
-	txData[1] = this->deviatn.raw;//TODO:DIFF 0x47
+	txData[1] = this->deviatn.raw;
 	errorcode = HAL_SPI_TransmitReceive(CC1101_SPI_HANDLE, txData, rxData, 2, 10);
 	if (errorcode != 0) return errorcode;
 
@@ -489,12 +489,12 @@ uint8_t CC1101::init()
 	txData[0] = CC1101_REG_AGCCTRL1;
 	txData[1] = this->agcctrl1.raw;
 	errorcode = HAL_SPI_TransmitReceive(CC1101_SPI_HANDLE, txData, rxData, 2, 10);
-	if (errorcode != 0) return errorcode;//TODO:DIFF 0x00
+	if (errorcode != 0) return errorcode;
 
 	txData[0] = CC1101_REG_AGCCTRL0;
 	txData[1] = this->agcctrl0.raw;
 	errorcode = HAL_SPI_TransmitReceive(CC1101_SPI_HANDLE, txData, rxData, 2, 10);
-	if (errorcode != 0) return errorcode;//TODO:DIFF 0x5A
+	if (errorcode != 0) return errorcode;
 
 	txData[0] = CC1101_REG_WOREVT1;
 	txData[1] = this->worevt1.raw;
@@ -529,7 +529,7 @@ uint8_t CC1101::init()
 	txData[0] = CC1101_REG_FSCAL2;
 	txData[1] = this->fscal2.raw;
 	errorcode = HAL_SPI_TransmitReceive(CC1101_SPI_HANDLE, txData, rxData, 2, 10);
-	if (errorcode != 0) return errorcode;//TODO:DIFF
+	if (errorcode != 0) return errorcode;
 
 	txData[0] = CC1101_REG_FSCAL1;
 	txData[1] = this->fscal1.raw;
@@ -539,7 +539,7 @@ uint8_t CC1101::init()
 	txData[0] = CC1101_REG_FSCAL0;
 	txData[1] = this->fscal0.raw;
 	errorcode = HAL_SPI_TransmitReceive(CC1101_SPI_HANDLE, txData, rxData, 2, 10);
-	if (errorcode != 0) return errorcode;//TODO:DIFF
+	if (errorcode != 0) return errorcode;
 
 	txData[0] = CC1101_REG_RCCTRL1;
 	txData[1] = this->rcctrl1.raw;
