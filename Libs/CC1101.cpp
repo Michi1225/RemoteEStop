@@ -35,7 +35,7 @@ CC1101::CC1101()
 
 	this->fifothr = 
 	{
-		.FIFO_THR = 0x0F,		//1 in TX, 64 in RX
+		.FIFO_THR = 0x04,		//1 in TX, 64 in RX
 		.CLOSE_IN_RX = 0x00,	//No RX Attenuation
 		.ADC_RETENTION = 0		//Only used in Test (I think)
 	};
@@ -129,7 +129,7 @@ CC1101::CC1101()
 	this->mdmcfg1 = 
 	{
 		.CHANSPC_E = 0x02,		//Default channel spacing exponent
-		.NUM_PREAMBLE = 0x07,	//4 bytes preamble
+		.NUM_PREAMBLE = 0x02,	//4 bytes preamble
 		.FEC_EN = 0				//FEC disabled
 	};
 
