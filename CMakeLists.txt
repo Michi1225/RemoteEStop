@@ -50,6 +50,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
     Libs/CC1101.cpp
     Libs/codec.cpp
+    Libs/transceiver.cpp
 )
 
 # Add include paths

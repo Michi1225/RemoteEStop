@@ -18,14 +18,18 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "rng.h"
 #include "spi.h"
+#include "tim.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "stm32g4xx_hal_gpio.h"
 #include "swo.h"
 #include "CC1101.h"
 #include "codec.h"
+#include "transceiver.h"
 
 /* USER CODE END Includes */
 
@@ -36,7 +40,6 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -47,7 +50,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+Transceiver transceiver(false); //false = receiver mode
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -91,52 +94,28 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_SPI1_Init();
+  MX_RNG_Init();
+  MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
   SWD_Init();
-  CC1101 cc1101;
-  cc1101.init();
-  CC1101_State state = cc1101.state_transition(cc1101_strobe_t::CC1101_Strobe_SRX);
-
-  ITM->PORT[0].u8 = 0;
-  ITM->PORT[1].u8 = 0;
-
+  transceiver.init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  uint8_t rxData[7] = {0,0,0,0,0, 0,0};
   while (1)
   {
-    while(HAL_GPIO_ReadPin(GDO0_GPIO_Port, GDO0_Pin) == GPIO_PIN_RESET)
+    transceiver.run();
+    if(transceiver.isESTOP())
     {
-      // int8_t rssi = 0;
-      // uint8_t stat_rssi = cc1101.read_status_reg(cc1101_statusreg_t::CC1101_STATUS_REG_RSSI);
-      // if(stat_rssi >= 128)
-      // {
-      //     rssi = (stat_rssi - 256) / 2 - 74;
-      // }
-      // else
-      // {
-      //     rssi = stat_rssi / 2 - 74;
-      // }
-      // ITM->PORT[0].u8 = rssi; //RSSI
-      // HAL_Delay(0);
-      __NOP();
-    }
-    cc1101.read_rx_fifo(rxData); 
-    uint32_t cypher = 0;
-    memcpy(&cypher, rxData + 1, 4);
-    ITM->PORT[1].u32 = codec::decode32(cypher); //device address
-    int8_t rssi = 0;
-    if(rxData[5] >= 128)
-    {
-        rssi = (rxData[5] - 256) / 2 - 74;
+        HAL_GPIO_WritePin(nESTOP_GPIO_Port, nESTOP_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(FPGA_GPIO_Port, FPGA_Pin, GPIO_PIN_SET);
     }
     else
     {
-        rssi = rxData[5] / 2 - 74;
+        HAL_GPIO_WritePin(nESTOP_GPIO_Port, nESTOP_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(FPGA_GPIO_Port, FPGA_Pin, GPIO_PIN_RESET);
     }
-    ITM->PORT[0].u8 = rssi; //RSSI
 
     /* USER CODE END WHILE */
 
@@ -161,9 +140,10 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_HSI48;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+  RCC_OscInitStruct.HSI48State = RCC_HSI48_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
   RCC_OscInitStruct.PLL.PLLM = RCC_PLLM_DIV4;
@@ -192,6 +172,14 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+    if(htim->Instance == TIM1)
+    {
+        transceiver.timeout();
+    }
+}
 
 /* USER CODE END 4 */
 

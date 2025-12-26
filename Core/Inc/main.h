@@ -95,8 +95,8 @@ void Error_Handler(void);
 #define D5_GPIO_Port GPIOB
 #define D6_Pin GPIO_PIN_5
 #define D6_GPIO_Port GPIOB
-#define D7_Pin GPIO_PIN_6
-#define D7_GPIO_Port GPIOB
+#define FPGA_Pin GPIO_PIN_6
+#define FPGA_GPIO_Port GPIOB
 #define D13_Pin GPIO_PIN_7
 #define D13_GPIO_Port GPIOB
 #define nESTOP_Pin GPIO_PIN_8

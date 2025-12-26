@@ -599,6 +599,23 @@ class CC1101
 private:
     CC1101_State state;
 
+	
+	public:
+	CC1101();
+	CC1101_State read_fsm_state();
+	
+    CC1101_State state_transition(cc1101_strobe_t strobe);
+	
+	uint8_t init();
+	
+	uint8_t read_rx_fifo(uint8_t *pRxData);
+	
+	uint8_t write_tx_fifo(uint8_t *pTxData);
+	
+	uint8_t read_status_reg(cc1101_statusreg_t reg);
+	
+	
+	
 	cc1101_iocfg2_t iocfg2;
 	cc1101_iocfg1_t iocfg1;
 	cc1101_iocfg0_t iocfg0;
@@ -640,23 +657,6 @@ private:
 	cc1101_fscal0_t fscal0;
 	cc1101_rcctrl1_t rcctrl1;
 	cc1101_rcctrl0_t rcctrl0;
-
-public:
-	CC1101();
-	CC1101_State read_fsm_state();
-
-    CC1101_State state_transition(cc1101_strobe_t strobe);
-
-	uint8_t init();
-
-	uint8_t read_rx_fifo(uint8_t *pRxData);
-
-	uint8_t write_tx_fifo(uint8_t *pTxData);
-
-	uint8_t read_status_reg(cc1101_statusreg_t reg);
-
-
-
 
 
 };

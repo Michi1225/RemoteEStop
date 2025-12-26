@@ -52,13 +52,13 @@ CC1101::CC1101()
 
 	this->pktlen = 
 	{
-		.PACKET_LENGTH = CC1101_PKT_LEN 		//3 bytes fixed length packets
+		.PACKET_LENGTH = 0x05 		//3 bytes fixed length packets
 	};
 
 	this->pktctrl1 = 
 	{
 		.ADR_CHK = 0x01,								//Address check, no broadcast
-		.APPEND_STATUS = CC1101_APPEND_STATUS,			//Append 2 status bytes to the payload
+		.APPEND_STATUS = 0x01,			//Append 2 status bytes to the payload
 		.CRC_AUTOFLUSH = 0,								//Disable auto flush on CRC error
 		.PQT = 0x05									//Preamble quality threshold
 	};

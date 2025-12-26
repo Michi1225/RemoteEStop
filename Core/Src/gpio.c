@@ -50,7 +50,13 @@ void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(D0_GPIO_Port, D0_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, NCS_Pin|nESTOP_Pin, GPIO_PIN_SET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(FPGA_GPIO_Port, FPGA_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : D14_Pin */
   GPIO_InitStruct.Pin = D14_Pin;
@@ -64,12 +70,19 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GDO0_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : D0_Pin D1_Pin D2_Pin D3_Pin
-                           D4_Pin D8_Pin D9_Pin D10_Pin
-                           D11_Pin D12_Pin D15_Pin */
-  GPIO_InitStruct.Pin = D0_Pin|D1_Pin|D2_Pin|D3_Pin
-                          |D4_Pin|D8_Pin|D9_Pin|D10_Pin
-                          |D11_Pin|D12_Pin|D15_Pin;
+  /*Configure GPIO pin : D0_Pin */
+  GPIO_InitStruct.Pin = D0_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(D0_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : D1_Pin D2_Pin D3_Pin D4_Pin
+                           D8_Pin D9_Pin D10_Pin D11_Pin
+                           D12_Pin D15_Pin */
+  GPIO_InitStruct.Pin = D1_Pin|D2_Pin|D3_Pin|D4_Pin
+                          |D8_Pin|D9_Pin|D10_Pin|D11_Pin
+                          |D12_Pin|D15_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
@@ -81,18 +94,18 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(NCS_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : D5_Pin D6_Pin D7_Pin D13_Pin */
-  GPIO_InitStruct.Pin = D5_Pin|D6_Pin|D7_Pin|D13_Pin;
+  /*Configure GPIO pins : D5_Pin D6_Pin D13_Pin */
+  GPIO_InitStruct.Pin = D5_Pin|D6_Pin|D13_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : nESTOP_Pin */
-  GPIO_InitStruct.Pin = nESTOP_Pin;
+  /*Configure GPIO pins : FPGA_Pin nESTOP_Pin */
+  GPIO_InitStruct.Pin = FPGA_Pin|nESTOP_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(nESTOP_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 }
 
