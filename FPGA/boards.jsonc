@@ -1,0 +1,16 @@
+{
+
+    "customICE": {
+        "legacy-name": "iCEBreaker",
+        "description": "custom icebreaker",
+        "fpga-id": "ice40up5k-sg48",
+        "programmer": {
+          "id": "iceprog"
+        },
+        "usb": {
+          "vid": "0403",
+          "pid": "6010",
+          "product-regex": "^(Dual RS232-HS)|(FPGA\\sProgrammer.*)"
+        }
+      }
+}

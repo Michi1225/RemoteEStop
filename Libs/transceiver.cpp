@@ -28,6 +28,7 @@ void Transceiver::init()
         HAL_TIM_Base_Start_IT(&htim1);
 
     }
+
 }
 
 void Transceiver::run()
@@ -66,7 +67,7 @@ void Transceiver::run()
         uint32_t cypher = 0;
         memcpy(&cypher, xferData + 1, 4);
         uint32_t rxCount= codec::decode32(cypher);
-        int64_t diff = rxCount - this->prevCounter;
+        int64_t diff = (rxCount - this->prevCounter + (1<<32)) % (1<<32); //handle overflow
 
 
 
@@ -106,8 +107,8 @@ void Transceiver::run()
                 }
             }
         }
-        ITM->PORT[0].u16 = validPacketCount; //debug output
-        ITM->PORT[1].u32 = prevCounter; //debug output
+        // ITM->PORT[0].u16 = validPacketCount; //debug output
+        ITM->PORT[1].u16 = prevCounter & 0xFFFF; //debug output
     }
 }
 

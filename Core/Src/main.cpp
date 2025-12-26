@@ -30,6 +30,8 @@
 #include "CC1101.h"
 #include "codec.h"
 #include "transceiver.h"
+#include <bit>
+#include <bitset>
 
 /* USER CODE END Includes */
 
@@ -62,6 +64,45 @@ void SystemClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+struct ui16{
+  uint8_t bit0 :1;
+  uint8_t bit1 :1;
+  uint8_t bit2 :1;
+  uint8_t bit3 :1;
+  uint8_t bit4 :1;
+  uint8_t bit5 :1;
+  uint8_t bit6 :1;
+  uint8_t bit7 :1;
+  uint8_t bit8 :1;
+  uint8_t bit9 :1;
+  uint8_t bit10 :1;
+  uint8_t bit11 :1;
+  uint8_t bit12 :1;
+  uint8_t bit13 :1;
+  uint8_t bit14 :1;
+  uint8_t bit15 :1;
+};
+uint16_t FPGA_Read()
+{
+  ui16 data;
+  data.bit0 = HAL_GPIO_ReadPin(D0_GPIO_Port, D0_Pin);
+  data.bit1 = HAL_GPIO_ReadPin(D1_GPIO_Port, D1_Pin);
+  data.bit2 = HAL_GPIO_ReadPin(D2_GPIO_Port, D2_Pin);
+  data.bit3 = HAL_GPIO_ReadPin(D3_GPIO_Port, D3_Pin);
+  data.bit4 = HAL_GPIO_ReadPin(D4_GPIO_Port, D4_Pin);
+  data.bit5 = HAL_GPIO_ReadPin(D5_GPIO_Port, D5_Pin);
+  data.bit6 = HAL_GPIO_ReadPin(D6_GPIO_Port, D6_Pin);
+  data.bit7 = HAL_GPIO_ReadPin(D7_GPIO_Port, D7_Pin);
+  data.bit8 = HAL_GPIO_ReadPin(D8_GPIO_Port, D8_Pin);
+  data.bit9 = HAL_GPIO_ReadPin(D9_GPIO_Port, D9_Pin);
+  data.bit10 = HAL_GPIO_ReadPin(D10_GPIO_Port, D10_Pin);
+  data.bit11 = HAL_GPIO_ReadPin(D11_GPIO_Port, D11_Pin);
+  data.bit12 = HAL_GPIO_ReadPin(D12_GPIO_Port, D12_Pin);
+  data.bit13 = HAL_GPIO_ReadPin(D13_GPIO_Port, D13_Pin);
+  data.bit14 = HAL_GPIO_ReadPin(D14_GPIO_Port, D14_Pin);
+  data.bit15 = HAL_GPIO_ReadPin(D15_GPIO_Port, D15_Pin);
+  return std::bit_cast<uint16_t>(data);
+}
 /* USER CODE END 0 */
 
 /**
@@ -103,20 +144,26 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  uint16_t c =0;
   while (1)
   {
     transceiver.run();
     if(transceiver.isESTOP())
     {
         HAL_GPIO_WritePin(nESTOP_GPIO_Port, nESTOP_Pin, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(FPGA_GPIO_Port, FPGA_Pin, GPIO_PIN_SET);
     }
     else
     {
         HAL_GPIO_WritePin(nESTOP_GPIO_Port, nESTOP_Pin, GPIO_PIN_SET);
-        HAL_GPIO_WritePin(FPGA_GPIO_Port, FPGA_Pin, GPIO_PIN_RESET);
     }
 
+    if(c >= 100)
+    {
+        c = 0;
+        ITM->PORT[0].u16 = FPGA_Read(); //debug output
+    }
+
+    ++c;
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

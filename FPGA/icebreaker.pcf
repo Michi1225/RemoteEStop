@@ -1,0 +1,29 @@
+# RGB LED Driver
+set_io -nowarn LED_BLU_N  39
+set_io -nowarn LED_GRN_N  40
+set_io -nowarn LED_RED_N  41
+
+# MCU Interface
+set_io -nowarn D[0] 25
+set_io -nowarn D[1] 23
+set_io -nowarn D[2] 27
+set_io -nowarn D[3] 26
+set_io -nowarn D[4] 28
+set_io -nowarn D[5] 31
+set_io -nowarn D[6] 32
+set_io -nowarn D[7] 34
+set_io -nowarn D[8] 37
+set_io -nowarn D[9] 36
+set_io -nowarn D[10] 43
+set_io -nowarn D[11] 38
+set_io -nowarn D[12] 42
+set_io -nowarn D[13] 46
+set_io -nowarn D[14] 47
+set_io -nowarn D[15] 44
+
+set_io -nowarn SPI_CLK 45
+set_io -nowarn SPI_DATA 2
+set_io -nowarn SPI_NCS 4
+
+
+set_io -nowarn ESTOP_N 3 
