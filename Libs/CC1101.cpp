@@ -325,6 +325,13 @@ CC1101_State CC1101::state_transition(cc1101_strobe_t strobe)
  */
 uint8_t CC1101::init()
 {
+	//Read Channel from Rotary Encoder
+	this->channel = (HAL_GPIO_ReadPin(D0_GPIO_Port, D0_Pin) << 0)
+				  | (HAL_GPIO_ReadPin(D1_GPIO_Port, D1_Pin) << 1)
+				  | (HAL_GPIO_ReadPin(D2_GPIO_Port, D2_Pin) << 2)
+				  | (HAL_GPIO_ReadPin(D3_GPIO_Port, D3_Pin) << 3);
+
+
 	uint8_t txData[2] = {0};
 	uint8_t rxData[2] = {0};
 	uint8_t errorcode = 0;

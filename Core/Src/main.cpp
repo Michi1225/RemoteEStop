@@ -18,8 +18,12 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "adc.h"
+#include "dma.h"
 #include "rng.h"
 #include "spi.h"
+#include "tim.h"
+#include "usb.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -27,6 +31,7 @@
 #include "swo.h"
 #include "CC1101.h"
 #include "codec.h"
+#include "Battery.h"
 
 /* USER CODE END Includes */
 
@@ -91,18 +96,27 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_SPI1_Init();
   MX_RNG_Init();
+  MX_TIM2_Init();
+  MX_USB_PCD_Init();
+  MX_ADC2_Init();
+  MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
   SWD_Init();
   CC1101 cc1101;
   int error = cc1101.init();
   CC1101_State state = cc1101.state_transition(cc1101_strobe_t::CC1101_Strobe_STX);
 
+  Battery_Init();
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
+
   uint32_t count = 0;
   HAL_RNG_GenerateRandomNumber(&hrng, &count);
   uint8_t txData[5] = {0x01,0,0,0,0};
@@ -111,8 +125,14 @@ int main(void)
     uint32_t cypher = codec::encode32(count);
     memcpy(txData + 1, &cypher, 4);
     cc1101.write_tx_fifo(txData);
-    ITM->PORT[0].u32 = cypher;
-    ITM->PORT[1].u32 = count;
+
+    float vref = 1.21f * 4096 / vrefint_adc; //calculate Vref in mV, see P.14 in STM32G4 reference manual
+    float voltage = Battery_ReadVoltage();
+
+
+
+    ITM->PORT[0].u32 = std::bit_cast<uint32_t>(voltage);
+    ITM->PORT[1].u32 = std::bit_cast<uint32_t>(vref);
 
     ++count;
     HAL_Delay(4);

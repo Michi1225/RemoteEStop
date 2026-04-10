@@ -598,6 +598,7 @@ class CC1101
 {
 private:
     CC1101_State state;
+	uint8_t channel;
 
 	cc1101_iocfg2_t iocfg2;
 	cc1101_iocfg1_t iocfg1;
