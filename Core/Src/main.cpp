@@ -64,7 +64,7 @@ void SystemClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-struct ui16{
+struct ui8{
   uint8_t bit0 :1;
   uint8_t bit1 :1;
   uint8_t bit2 :1;
@@ -73,18 +73,10 @@ struct ui16{
   uint8_t bit5 :1;
   uint8_t bit6 :1;
   uint8_t bit7 :1;
-  uint8_t bit8 :1;
-  uint8_t bit9 :1;
-  uint8_t bit10 :1;
-  uint8_t bit11 :1;
-  uint8_t bit12 :1;
-  uint8_t bit13 :1;
-  uint8_t bit14 :1;
-  uint8_t bit15 :1;
 };
-uint16_t FPGA_Read()
+uint8_t FPGA_Read()
 {
-  ui16 data;
+  ui8 data;
   data.bit0 = HAL_GPIO_ReadPin(D0_GPIO_Port, D0_Pin);
   data.bit1 = HAL_GPIO_ReadPin(D1_GPIO_Port, D1_Pin);
   data.bit2 = HAL_GPIO_ReadPin(D2_GPIO_Port, D2_Pin);
@@ -93,15 +85,7 @@ uint16_t FPGA_Read()
   data.bit5 = HAL_GPIO_ReadPin(D5_GPIO_Port, D5_Pin);
   data.bit6 = HAL_GPIO_ReadPin(D6_GPIO_Port, D6_Pin);
   data.bit7 = HAL_GPIO_ReadPin(D7_GPIO_Port, D7_Pin);
-  data.bit8 = HAL_GPIO_ReadPin(D8_GPIO_Port, D8_Pin);
-  data.bit9 = HAL_GPIO_ReadPin(D9_GPIO_Port, D9_Pin);
-  data.bit10 = HAL_GPIO_ReadPin(D10_GPIO_Port, D10_Pin);
-  data.bit11 = HAL_GPIO_ReadPin(D11_GPIO_Port, D11_Pin);
-  data.bit12 = HAL_GPIO_ReadPin(D12_GPIO_Port, D12_Pin);
-  data.bit13 = HAL_GPIO_ReadPin(D13_GPIO_Port, D13_Pin);
-  data.bit14 = HAL_GPIO_ReadPin(D14_GPIO_Port, D14_Pin);
-  data.bit15 = HAL_GPIO_ReadPin(D15_GPIO_Port, D15_Pin);
-  return std::bit_cast<uint16_t>(data);
+  return std::bit_cast<uint8_t>(data);
 }
 /* USER CODE END 0 */
 
@@ -137,6 +121,7 @@ int main(void)
   MX_SPI1_Init();
   MX_RNG_Init();
   MX_TIM1_Init();
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
   SWD_Init();
   transceiver.init();
@@ -144,6 +129,12 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2); //start PWM for LED_R
+  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_3); //start PWM for LED_G
+  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4); //start PWM for LED_B
+  TIM2->CCR2 = 500; //LED_R off
+  TIM2->CCR3 = 500; //LED_G off
+  TIM2->CCR4 = 500; //LED_B off
   uint16_t c =0;
   while (1)
   {
@@ -160,7 +151,7 @@ int main(void)
     if(c >= 100)
     {
         c = 0;
-        ITM->PORT[0].u16 = FPGA_Read(); //debug output
+        // ITM->PORT[0].u8 = transceiver.cc1101.read_status_reg(cc1101_statusreg_t::CC1101_STATUS_REG_RSSI); //debug output
     }
 
     ++c;

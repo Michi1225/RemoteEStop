@@ -57,20 +57,20 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define D14_Pin GPIO_PIN_0
-#define D14_GPIO_Port GPIOF
+#define CH1_Pin GPIO_PIN_0
+#define CH1_GPIO_Port GPIOF
 #define GDO0_Pin GPIO_PIN_1
 #define GDO0_GPIO_Port GPIOF
-#define D13_Pin GPIO_PIN_0
-#define D13_GPIO_Port GPIOA
-#define D15_Pin GPIO_PIN_1
-#define D15_GPIO_Port GPIOA
-#define D10_Pin GPIO_PIN_2
-#define D10_GPIO_Port GPIOA
-#define D12_Pin GPIO_PIN_3
-#define D12_GPIO_Port GPIOA
-#define D11_Pin GPIO_PIN_4
-#define D11_GPIO_Port GPIOA
+#define CH3_Pin GPIO_PIN_0
+#define CH3_GPIO_Port GPIOA
+#define LED_R_Pin GPIO_PIN_1
+#define LED_R_GPIO_Port GPIOA
+#define LED_G_Pin GPIO_PIN_2
+#define LED_G_GPIO_Port GPIOA
+#define LED_B_Pin GPIO_PIN_3
+#define LED_B_GPIO_Port GPIOA
+#define CH2_Pin GPIO_PIN_4
+#define CH2_GPIO_Port GPIOA
 #define SPI_SCK_RF_Pin GPIO_PIN_5
 #define SPI_SCK_RF_GPIO_Port GPIOA
 #define SPI_MISO_RF_Pin GPIO_PIN_6
@@ -79,10 +79,10 @@ void Error_Handler(void);
 #define SPI_MOSI_RF_GPIO_Port GPIOA
 #define NCS_Pin GPIO_PIN_0
 #define NCS_GPIO_Port GPIOB
-#define D8_Pin GPIO_PIN_8
-#define D8_GPIO_Port GPIOA
-#define D9_Pin GPIO_PIN_9
-#define D9_GPIO_Port GPIOA
+#define CH0_Pin GPIO_PIN_8
+#define CH0_GPIO_Port GPIOA
+#define nWD_RST_Pin GPIO_PIN_9
+#define nWD_RST_GPIO_Port GPIOA
 #define D7_Pin GPIO_PIN_10
 #define D7_GPIO_Port GPIOA
 #define D6_Pin GPIO_PIN_11

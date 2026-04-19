@@ -15,8 +15,8 @@ public:
     void run();
     void timeout();
     bool isESTOP() const { return this->ESTOP; }
-private:
     CC1101 cc1101;
+private:
     bool transmitter = false;
     uint8_t xferData[64] = {0};
     bool ESTOP = true;
