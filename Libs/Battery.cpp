@@ -27,7 +27,7 @@ static void updateLED(float voltage)
     uint32_t color;
     uint8_t brightness;
 
-    if (voltage > 4.2f)
+    if (voltage > 4.5f)
     {
         color = COLOR_BLUE;
     }
