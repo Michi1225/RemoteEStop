@@ -122,17 +122,19 @@ int main(void)
   uint8_t txData[5] = {0x01,0,0,0,0};
   while (1)
   {
-    uint32_t cypher = codec::encode32(count);
-    memcpy(txData + 1, &cypher, 4);
-    cc1101.write_tx_fifo(txData);
-
+    if(HAL_GPIO_ReadPin(nESTOP_GPIO_Port, nESTOP_Pin) != GPIO_PIN_RESET)
+    {
+      uint32_t cypher = codec::encode32(count);
+      memcpy(txData + 1, &cypher, 4);
+      cc1101.write_tx_fifo(txData);
+    }
     float vref = 1.21f * 4096 / vrefint_adc; //calculate Vref in mV, see P.14 in STM32G4 reference manual
     float voltage = Battery_ReadVoltage();
 
 
 
-    ITM->PORT[0].u32 = std::bit_cast<uint32_t>(voltage);
-    ITM->PORT[1].u32 = std::bit_cast<uint32_t>(vref);
+    // ITM->PORT[0].u32 = std::bit_cast<uint32_t>(voltage);
+    // ITM->PORT[1].u32 = std::bit_cast<uint32_t>(vref);
 
     ++count;
     HAL_Delay(4);
