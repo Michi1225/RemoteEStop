@@ -137,7 +137,7 @@ int main(void)
     // ITM->PORT[1].u32 = std::bit_cast<uint32_t>(vref);
 
     ++count;
-    HAL_Delay(4);
+    HAL_Delay(3);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

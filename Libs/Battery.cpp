@@ -33,15 +33,6 @@ static void updateLED(float voltage)
     }
     else if (voltage > 4.0f)
     {
-        // Blend BLUE to GREEN
-        float blend = (voltage - 4.0f) / 0.2f;
-        uint32_t r = (uint32_t)((0x00 * (1 - blend) + 0x00 * blend));
-        uint32_t g = (uint32_t)((0xFF * (1 - blend) + 0xFF * blend));
-        uint32_t b = (uint32_t)((0xFF * (1 - blend) + 0x00 * blend));
-        color = (r << 16) | (g << 8) | b;
-    }
-    else if (voltage > 3.8f)
-    {
         color = COLOR_GREEN;
     }
     else if (voltage > 3.6f)
